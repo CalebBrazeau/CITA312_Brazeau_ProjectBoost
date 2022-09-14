@@ -5,9 +5,12 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     Rigidbody rb;
+    [SerializeField] float fltMainThrust = 0f;
+
     // Start is called before the first frame update
     void Start()
     {
+        // Get rocket's rigidbody
         rb = GetComponent<Rigidbody>();
     }
 
@@ -22,7 +25,8 @@ public class Movement : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            rb.AddRelativeForce(Vector3.up);
+            // Add upwards thrust relative to rockets coordinates
+            rb.AddRelativeForce(Vector3.up * fltMainThrust * Time.deltaTime);
         }
     }
 
