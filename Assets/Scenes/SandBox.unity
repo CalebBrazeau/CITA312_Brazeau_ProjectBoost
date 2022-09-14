@@ -490,6 +490,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fltMainThrust: 850
+  fltRotatationThrust: 100
 --- !u!54 &8143286869236431578
 Rigidbody:
   m_ObjectHideFlags: 0
