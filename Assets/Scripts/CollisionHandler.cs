@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CollisionHandler : MonoBehaviour
 {
@@ -16,8 +17,16 @@ public class CollisionHandler : MonoBehaviour
                 Debug.Log("Collided with the FUeld Objec");
             break;
             default:
-                Debug.Log("AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHhh");
+                ReloadLevel();
             break;
         }
+    }
+
+    void ReloadLevel()
+    {
+        // Get the current scene/level index
+        int intCurrentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        // Reload the current scene/level
+        SceneManager.LoadScene(intCurrentSceneIndex);
     }
 }
