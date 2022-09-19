@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class CollisionHandler : MonoBehaviour
 {
+    [SerializeField] float fltLevelLoadDelay = 0f;
     void OnCollisionEnter(Collision other)
     {
         switch (other.gameObject.tag)
@@ -11,15 +12,31 @@ public class CollisionHandler : MonoBehaviour
                 Debug.Log("Collided with Friendly thing");
             break;
             case "Finish":
-                LoadNextLevel();
+                StartSuccessSequence();
             break;
             case "Fuel":
                 Debug.Log("Collided with the FUeld Objec");
             break;
             default:
-                ReloadLevel();
+                StartCrashSequence();
             break;
         }
+    }
+
+    void StartSuccessSequence()
+    {
+        // Todo add sound effect
+        // Todo add particles
+        GetComponent<Movement>().enabled = false;
+        Invoke("LoadNextLevel", fltLevelLoadDelay);
+    }
+
+    void StartCrashSequence()
+    {
+        // Todo add sound effect on crash
+        // Todo add particles on crash
+        GetComponent<Movement>().enabled = false;
+        Invoke("ReloadLevel", fltLevelLoadDelay);
     }
 
     void LoadNextLevel()
@@ -34,7 +51,7 @@ public class CollisionHandler : MonoBehaviour
             // Reset next scene index
             intNextSceneIndex = 0;
         }
-        
+
         // Go to next scene index
         SceneManager.LoadScene(intNextSceneIndex);
     }
