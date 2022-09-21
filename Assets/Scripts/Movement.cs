@@ -11,6 +11,10 @@ public class Movement : MonoBehaviour
     [SerializeField] float fltRotatationThrust = 0f;
     [SerializeField] AudioClip mainEngine;
 
+    [SerializeField] ParticleSystem mainThrusterParticles;
+    [SerializeField] ParticleSystem leftThrusterParticles;
+    [SerializeField] ParticleSystem rightThrusterParticles;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -38,11 +42,16 @@ public class Movement : MonoBehaviour
                 // Play the audio
                 audioSource.PlayOneShot(mainEngine);
             }
+            if(!mainThrusterParticles.isPlaying)
+            {
+                mainThrusterParticles.Play();
+            }
         }
         else
         {
             // Stop the audio from playing
             audioSource.Stop();
+            mainThrusterParticles.Stop();
         }
     }
 
@@ -52,11 +61,26 @@ public class Movement : MonoBehaviour
         {
             // Apply positive rotation
             ApplyRotation(fltRotatationThrust);
+
+            if(!rightThrusterParticles.isPlaying)
+            {
+                rightThrusterParticles.Play();
+            }
         }
         else if (Input.GetKey(KeyCode.D))
         {
             // Apply negative rotation
             ApplyRotation(-fltRotatationThrust);
+            
+            if(!leftThrusterParticles.isPlaying)
+            {
+                leftThrusterParticles.Play();
+            }
+        }
+        else
+        {
+            rightThrusterParticles.Stop();
+            leftThrusterParticles.Stop();
         }
     }
 
