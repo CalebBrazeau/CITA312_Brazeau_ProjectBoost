@@ -9,6 +9,8 @@ public class CollisionHandler : MonoBehaviour
 
     AudioSource audioSource;
 
+    bool boolIsTransitioning = false;
+
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
@@ -16,6 +18,8 @@ public class CollisionHandler : MonoBehaviour
 
     void OnCollisionEnter(Collision other)
     {
+        if(boolIsTransitioning) {return;}
+
         switch (other.gameObject.tag)
         {
             case "Friendly":
@@ -35,7 +39,12 @@ public class CollisionHandler : MonoBehaviour
 
     void StartSuccessSequence()
     {
+        boolIsTransitioning = true;
+
+        // Stop all audio and play success sound
+        audioSource.Stop();
         audioSource.PlayOneShot(success);
+
         // Todo add particles
         GetComponent<Movement>().enabled = false;
         Invoke("LoadNextLevel", fltLevelLoadDelay);
@@ -43,7 +52,12 @@ public class CollisionHandler : MonoBehaviour
 
     void StartCrashSequence()
     {
+        boolIsTransitioning = true;
+
+        // Stop all audio and play crash sound
+        audioSource.Stop();
         audioSource.PlayOneShot(crash);
+
         // Todo add particles on crash
         GetComponent<Movement>().enabled = false;
         Invoke("ReloadLevel", fltLevelLoadDelay);

@@ -11,8 +11,6 @@ public class Movement : MonoBehaviour
     [SerializeField] float fltRotatationThrust = 0f;
     [SerializeField] AudioClip mainEngine;
 
-    bool boolIsAlive;
-
     // Start is called before the first frame update
     void Start()
     {
