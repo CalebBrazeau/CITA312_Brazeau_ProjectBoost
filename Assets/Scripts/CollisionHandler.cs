@@ -6,6 +6,9 @@ public class CollisionHandler : MonoBehaviour
     [SerializeField] float fltLevelLoadDelay = 0f;
     [SerializeField] AudioClip success;
     [SerializeField] AudioClip crash;
+    
+    [SerializeField] ParticleSystem crashParticles;
+    [SerializeField] ParticleSystem successParticles;
 
     AudioSource audioSource;
 
@@ -45,6 +48,9 @@ public class CollisionHandler : MonoBehaviour
         audioSource.Stop();
         audioSource.PlayOneShot(success);
 
+        // Play particles
+        successParticles.Play();
+
         // Todo add particles
         GetComponent<Movement>().enabled = false;
         Invoke("LoadNextLevel", fltLevelLoadDelay);
@@ -57,6 +63,9 @@ public class CollisionHandler : MonoBehaviour
         // Stop all audio and play crash sound
         audioSource.Stop();
         audioSource.PlayOneShot(crash);
+
+        // Play particles
+        crashParticles.Play();
 
         // Todo add particles on crash
         GetComponent<Movement>().enabled = false;
