@@ -6,8 +6,12 @@ public class Movement : MonoBehaviour
 {
     Rigidbody rb;
     AudioSource audioSource;
+
     [SerializeField] float fltMainThrust = 0f;
     [SerializeField] float fltRotatationThrust = 0f;
+    [SerializeField] AudioClip mainEngine;
+
+    bool boolIsAlive;
 
     // Start is called before the first frame update
     void Start()
@@ -34,7 +38,7 @@ public class Movement : MonoBehaviour
             if (!audioSource.isPlaying)
             {
                 // Play the audio
-                audioSource.Play();
+                audioSource.PlayOneShot(mainEngine);
             }
         }
         else
