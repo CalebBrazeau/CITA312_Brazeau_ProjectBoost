@@ -26,32 +26,19 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        ProcessInput();
+        ProcessThrust();
         ProcessRotation();
     }
 
-    void ProcessInput()
+    void ProcessThrust()
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            // Add upwards thrust relative to rockets coordinates
-            rb.AddRelativeForce(Vector3.up * fltMainThrust * Time.deltaTime);
-            // If the audio is not play
-            if (!audioSource.isPlaying)
-            {
-                // Play the audio
-                audioSource.PlayOneShot(mainEngine);
-            }
-            if(!mainThrusterParticles.isPlaying)
-            {
-                mainThrusterParticles.Play();
-            }
+            StartThrusting();
         }
         else
         {
-            // Stop the audio from playing
-            audioSource.Stop();
-            mainThrusterParticles.Stop();
+            StopThrusting();
         }
     }
 
@@ -59,29 +46,69 @@ public class Movement : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.A))
         {
-            // Apply positive rotation
-            ApplyRotation(fltRotatationThrust);
-
-            if(!rightThrusterParticles.isPlaying)
-            {
-                rightThrusterParticles.Play();
-            }
+            RotateLeft();
         }
         else if (Input.GetKey(KeyCode.D))
         {
-            // Apply negative rotation
-            ApplyRotation(-fltRotatationThrust);
-            
-            if(!leftThrusterParticles.isPlaying)
-            {
-                leftThrusterParticles.Play();
-            }
+            RotateRight();
         }
         else
         {
-            rightThrusterParticles.Stop();
-            leftThrusterParticles.Stop();
+            StopRotating();
         }
+    }
+    
+    void StartThrusting()
+    {
+        // Add upwards thrust relative to rockets coordinates
+        rb.AddRelativeForce(Vector3.up * fltMainThrust * Time.deltaTime);
+        // If the audio is not play
+        if (!audioSource.isPlaying)
+        {
+            // Play the audio
+            audioSource.PlayOneShot(mainEngine);
+        }
+        if(!mainThrusterParticles.isPlaying)
+        {
+            mainThrusterParticles.Play();
+        }
+    }
+
+    void StopThrusting()
+    {
+        // Stop the audio from playing
+        audioSource.Stop();
+        // Stop the thrust particles from playing
+        mainThrusterParticles.Stop();
+    }
+
+
+    void RotateLeft()
+    {
+        // Apply positive rotation
+        ApplyRotation(fltRotatationThrust);
+
+        if(!rightThrusterParticles.isPlaying)
+        {
+            rightThrusterParticles.Play();
+        }
+    }
+
+    void RotateRight()
+    {
+        // Apply negative rotation
+        ApplyRotation(-fltRotatationThrust);
+            
+        if(!leftThrusterParticles.isPlaying)
+        {
+            leftThrusterParticles.Play();
+        }
+    }
+
+    void StopRotating()
+    {
+        rightThrusterParticles.Stop();
+        leftThrusterParticles.Stop();
     }
 
     void ApplyRotation(float fltRotationThisFrame)
