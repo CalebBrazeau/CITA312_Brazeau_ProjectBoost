@@ -20,6 +20,9 @@ public class Oscillator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // If the period is less than or equal to the smallest possible float return
+        if (period <= Mathf.Epsilon) { return; }
+
         float fltCycles = Time.time / period; // Continually growing over time
         
         const float FLTTAU = Mathf.PI * 2; // Constant value of 6.28
